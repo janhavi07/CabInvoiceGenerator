@@ -16,5 +16,17 @@ namespace CabInvoiceTesting
                 return MINIMUM_FARE;
             return totalFare;
         }
+
+        public double CalculateTotalFare(Ride[] rides)
+        {
+            double totalFare = 0;
+            foreach (Ride ride in rides)
+            {
+                totalFare += CalculateFare(ride.rideDistance, ride.rideTime);
+            }
+            if (totalFare < MINIMUM_FARE)
+                return MINIMUM_FARE;
+            return totalFare;
+        }
     }
 }

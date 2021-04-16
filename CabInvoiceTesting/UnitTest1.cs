@@ -1,4 +1,5 @@
 using NUnit.Framework;
+
 namespace CabInvoiceTesting
 {
     public class Tests
@@ -22,6 +23,17 @@ namespace CabInvoiceTesting
             InvoiceGenerator invoice = new InvoiceGenerator();
             double fare = invoice.CalculateFare(distance, time);
             Assert.AreEqual(fare, minimumFare);
+        }
+        [Test]
+        public void GivenMultipleRides_WhenCalculatedFare_ShouldReturnTotalFare()
+        {
+            Ride[] rides = {
+                new Ride(2.0,25.0),
+                new Ride(3.0,55.0)
+            };
+            InvoiceGenerator invoice = new InvoiceGenerator();
+            double totalFare = invoice.CalculateTotalFare(rides);
+            Assert.AreEqual(totalFare, 130.0);
         }
     }
 }
