@@ -28,5 +28,20 @@ namespace CabInvoiceTesting
                 return MINIMUM_FARE;
             return totalFare;
         }
+
+        public Invoice GenerateInvoice(Ride[] rides)
+        {
+            double totalFare = 0;
+            foreach (Ride ride in rides)
+            {
+                totalFare += CalculateFare(ride.rideDistance, ride.rideTime);
+            }
+            double avgFare = (totalFare / rides.Length);
+            Invoice invoice = new Invoice();
+            invoice.totalFare = totalFare;
+            invoice.totalRides = rides.Length;
+            invoice.averageFare = avgFare;
+            return invoice;
+        }
     }
 }
