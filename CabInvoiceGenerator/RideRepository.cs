@@ -10,6 +10,8 @@ namespace CabInvoiceTesting
 
         public void AddRides(string userId, Ride[] rides)
         {
+            if (userId == null)
+                throw new CustomException("User is null", CustomException.ExceptionType.NULLVALUE);
             if (!(data.ContainsKey(userId)))
             {
                 rideList.Clear();

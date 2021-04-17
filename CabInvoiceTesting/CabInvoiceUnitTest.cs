@@ -109,6 +109,26 @@ namespace CabInvoiceTesting
             Invoice invoiceSummary = invoice.GenerateInvoice(rides);
             Assert.AreEqual(invoiceSummary.totalRides, 2);
         }
+
+        [Test]
+        public void GivenNullUservalue_WhenCalculated_ShouldThrowException()
+        {
+            try
+            {
+                string userId2 = "pan23";
+                Ride[] ride1 = {
+                new Ride(2.0,25.0),
+                new Ride(3.0,55.0)
+            };
+                repository.AddRides(userId2, ride1);
+                repository.GetRides(userId2);
+            }
+            catch(CustomException exception)
+            {
+                Assert.AreEqual("User is null", exception.Message);
+            }
+
+        }
         
     }
 }
