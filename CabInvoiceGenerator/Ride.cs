@@ -1,14 +1,17 @@
-﻿namespace CabInvoiceTesting
+﻿using CabInvoiceGenerator;
+
+namespace CabInvoiceTesting
 {
     public class Ride
     {
          public double rideDistance;
          public double rideTime;
-
-        public Ride(double distance, double time)
+         public Cab type;
+        public Ride(Cab type,double distance, double time)
         {
             this.rideDistance = distance;
             this.rideTime = time;
+            this.type = type;
         }
     }
 }

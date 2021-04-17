@@ -15,15 +15,11 @@ namespace CabInvoiceTesting
             if (!(data.ContainsKey(userId)))
             {
                 rideList.Clear();
-                //List<Ride> tempList = new List<Ride>();
                 rideList.AddRange(rides);
                 data.Add(userId, rideList);
             }
             else
-            {
                 rideList.AddRange(rides);
-                
-            }
         }
 
         public Ride[] GetRides(string userId)

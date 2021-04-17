@@ -1,32 +1,18 @@
-﻿using System;
+﻿using CabInvoiceGenerator;
+using System;
 
 namespace CabInvoiceTesting
 {
     public class InvoiceGenerator
     {
-        
-        private double COST_PER_KILOMETER = 10.0;
-        private double COST_PER_MINUTE = 1.0;
-        private double MINIMUM_FARE = 5.0;
-        
-        public double CalculateFare(double distance, double time)
+     
+        public double CalculateFare(Cab type,double distance, double time)
         {
-            double totalFare = ((distance * COST_PER_KILOMETER) + (time * COST_PER_MINUTE));
-            if (totalFare < MINIMUM_FARE)
-                return MINIMUM_FARE;
+            double totalFare = distance*type.perKilometer + time*type.perMinute;
+            if (totalFare < type.minimumFare)
+                return type.minimumFare;
             return totalFare;
-        }
-
-        public double CalculateTotalFare(Ride[] rides)
-        {
-            double totalFare = 0;
-            foreach (Ride ride in rides)
-            {
-                totalFare += CalculateFare(ride.rideDistance, ride.rideTime);
-            }
-            if (totalFare < MINIMUM_FARE)
-                return MINIMUM_FARE;
-            return totalFare;
+            
         }
 
         public Invoice GenerateInvoice(Ride[] rides)
@@ -34,7 +20,7 @@ namespace CabInvoiceTesting
             double totalFare = 0;
             foreach (Ride ride in rides)
             {
-                totalFare += CalculateFare(ride.rideDistance, ride.rideTime);
+                 totalFare += CalculateFare(ride.type,ride.rideDistance,ride.rideTime);
             }
             double avgFare = (totalFare / rides.Length);
             Invoice invoice = new Invoice();
