@@ -5,6 +5,8 @@ namespace CabInvoiceTesting
     public class Tests
     {
         InvoiceGenerator invoice = new InvoiceGenerator();
+        RideRepository repository = new RideRepository();
+
 
         [Test]
         public void GivenDistanceAndTime_WhenCalculated_ShouldReturnTotalFare()
@@ -66,6 +68,46 @@ namespace CabInvoiceTesting
             Ride[] ride = repository.GetRides(userId);
             Invoice details = invoice.GenerateInvoice(ride);
             Assert.AreEqual(details.totalRides, rides.Length);
+        }
+
+        [Test]
+        public void GivenOneUserAndMultipleRides_ShouldReturnTotalRides()
+        {
+            string userId = "jan12";
+            Ride[] ride1 = {
+                new Ride(2.0,25.0),
+                new Ride(3.0,55.0)
+            };
+            Ride[] ride2 = {
+                            new Ride(3.0,30.0),
+                            new Ride(1.0,10.0)
+            };
+            repository.AddRides(userId, ride1);
+            repository.AddRides(userId, ride2);
+            Ride[] rides = repository.GetRides(userId);
+            Invoice invoiceSummary = invoice.GenerateInvoice(rides);
+            Assert.AreEqual(invoiceSummary.totalRides, 4);
+            
+        }
+
+        [Test]
+        public void GivenMultipleUsersAndMultipleRides_WhenCalculated_ShouldReturnProperRideCount()
+        {
+            string userId1 = "jan12";
+            string userId2 = "pan23";
+            Ride[] ride1 = {
+                new Ride(2.0,25.0),
+                new Ride(3.0,55.0)
+            };
+            Ride[] ride2 = {
+                            new Ride(3.0,30.0),
+                            new Ride(1.0,10.0)
+            };
+            repository.AddRides(userId1, ride1);
+            repository.AddRides(userId2, ride2);
+            Ride[] rides = repository.GetRides(userId2);
+            Invoice invoiceSummary = invoice.GenerateInvoice(rides);
+            Assert.AreEqual(invoiceSummary.totalRides, 2);
         }
         
     }

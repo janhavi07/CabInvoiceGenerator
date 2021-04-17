@@ -6,16 +6,21 @@ namespace CabInvoiceTesting
     public class RideRepository
     {
         Dictionary<string, List<Ride>> data = new Dictionary<string, List<Ride>>();
+        List<Ride> rideList = new List<Ride>();
 
         public void AddRides(string userId, Ride[] rides)
         {
             if (!(data.ContainsKey(userId)))
             {
-                List<Ride> rideList = new List<Ride>();
+                rideList.Clear();
+                //List<Ride> tempList = new List<Ride>();
                 rideList.AddRange(rides);
-                if (rideList.Contains(null))
-                    throw new CustomException("Null Rides",CustomException.ExceptionType.NULLVALUE);
                 data.Add(userId, rideList);
+            }
+            else
+            {
+                rideList.AddRange(rides);
+                
             }
         }
 
